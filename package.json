@@ -1,0 +1,12 @@
+{
+  "name": "codealpha-fsd",
+  "version": "1.0.0",
+  "description": "CodeAlpha Full Stack Development Internship Tasks",
+  "scripts": {
+    "install:all": "npm --prefix Task-1-Ecommerce install && npm --prefix Task-2-Social-Media install",
+    "start:task1": "node Task-1-Ecommerce/server.js",
+    "start:task2": "node Task-2-Social-Media/server.js"
+  },
+  "author": "CodeAlpha Intern",
+  "license": "ISC"
+}

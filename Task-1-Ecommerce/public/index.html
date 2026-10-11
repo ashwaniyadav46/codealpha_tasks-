@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha Store — Simple E-commerce</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-brand">
+      <span class="logo-icon">🛍️</span>
+      <h1>CodeAlpha Store</h1>
+    </div>
+    <div class="nav-actions">
+      <div id="authNav" class="auth-pill">
+        <span id="userStatusText">Guest</span>
+        <button id="authBtn" class="btn btn-outline btn-sm">Login / Register</button>
+      </div>
+      <button id="myOrdersBtn" class="btn btn-ghost btn-sm">📦 My Orders</button>
+      <button id="cartToggleBtn" class="btn btn-primary btn-sm">
+        🛒 Cart (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <div class="hero-banner">
+    <div class="hero-content">
+      <h2>Welcome to CodeAlpha Tech Gear</h2>
+      <p>Discover top-tier electronics, accessories, and developer gadgets at unbeatable prices.</p>
+    </div>
+  </div>
+
+  <main class="main-layout">
+    <!-- Products Column -->
+    <section class="catalog-section">
+      <div class="section-header">
+        <div>
+          <h2>Available Products</h2>
+          <p class="subtitle">Click any product to view full details</p>
+        </div>
+        <button id="seedBtn" class="btn btn-secondary btn-sm">↻ Reset Sample Data</button>
+      </div>
+
+      <div id="productsGrid" class="products-grid">
+        <div class="loading-state">Loading products...</div>
+      </div>
+    </section>
+
+    <!-- Shopping Cart Aside -->
+    <aside id="cartAside" class="cart-panel">
+      <div class="cart-header">
+        <h3>🛒 Shopping Cart</h3>
+        <button id="clearCartBtn" class="btn-link" title="Clear all items">Clear</button>
+      </div>
+
+      <div id="cartItemsList" class="cart-items-container">
+        <p class="empty-cart-msg">Your cart is currently empty.</p>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹<span id="subtotal">0</span></span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free-shipping">FREE</span>
+        </div>
+        <div class="summary-total">
+          <span>Total:</span>
+          <span>₹<span id="cartTotal">0</span></span>
+        </div>
+
+        <div class="checkout-form">
+          <label for="custName">Customer Name *</label>
+          <input type="text" id="custName" placeholder="e.g. John Doe" required>
+
+          <label for="custEmail">Email (optional for order receipt)</label>
+          <input type="email" id="custEmail" placeholder="e.g. john@example.com">
+
+          <button id="placeOrderBtn" class="btn btn-success btn-block">Place Order Now</button>
+          <p id="checkoutStatus" class="status-msg"></p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Product Details Modal -->
+  <div id="detailsModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeDetailsModal()">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-image-col">
+          <img id="detailImg" src="" alt="Product">
+        </div>
+        <div class="modal-info-col">
+          <span id="detailCategory" class="badge">Category</span>
+          <h2 id="detailTitle">Product Name</h2>
+          <p id="detailPrice" class="detail-price">₹0</p>
+          <p id="detailDescription" class="detail-desc"></p>
+          <div class="detail-actions">
+            <button id="detailAddToCartBtn" class="btn btn-primary">Add to Cart</button>
+            <button class="btn btn-outline" onclick="closeDetailsModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Login / Register) -->
+  <div id="authModal" class="modal-backdrop hidden">
+    <div class="modal-card auth-modal-card">
+      <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+      <div class="auth-tabs">
+        <button id="loginTabBtn" class="tab-btn active" onclick="switchAuthTab('login')">Login</button>
+        <button id="registerTabBtn" class="tab-btn" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+        <h3>Welcome Back</h3>
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required>
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        <p id="loginMsg" class="status-msg"></p>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="auth-form hidden" onsubmit="handleRegister(event)">
+        <h3>Create New Account</h3>
+        <label>Full Name</label>
+        <input type="text" id="regName" placeholder="Alex Smith" required>
+        <label>Email Address</label>
+        <input type="email" id="regEmail" placeholder="alex@example.com" required>
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="••••••••" required>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        <p id="regMsg" class="status-msg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Orders History Modal -->
+  <div id="ordersModal" class="modal-backdrop hidden">
+    <div class="modal-card orders-modal-card">
+      <button class="modal-close" onclick="closeOrdersModal()">&times;</button>
+      <h2>📦 Order History</h2>
+      <p class="subtitle">Review your past placed orders</p>
+      <div id="ordersList" class="orders-list">
+        <p class="loading-state">Loading past orders...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>CodeAlpha Full Stack Development Internship &bull; Task 1: Simple E-commerce Store</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

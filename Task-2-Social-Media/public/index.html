@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha Social — Mini Social Media</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-brand">
+      <span class="logo-icon">🌐</span>
+      <h1>CodeAlpha Social</h1>
+    </div>
+    <div class="user-switcher-bar">
+      <label for="activeUserSelect">Browsing as:</label>
+      <select id="activeUserSelect" onchange="changeActiveUser(this.value)">
+        <option value="">Loading profiles...</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="social-container">
+    <!-- Left Sidebar: Profile & Creation -->
+    <aside class="sidebar-left">
+      <div class="card profile-preview-card">
+        <div class="avatar-large" id="activeAvatar">U</div>
+        <h3 id="activeName">Your Name</h3>
+        <p id="activeBio" class="bio-text">Bio description</p>
+        <div class="stats-row">
+          <div><b id="activeFollowersCount">0</b> Followers</div>
+        </div>
+      </div>
+
+      <div class="card create-user-card">
+        <h3>Create New Profile</h3>
+        <p class="subtitle">Join the developer community</p>
+        <form id="createUserForm" onsubmit="handleCreateUser(event)">
+          <label for="newUserName">Display Name *</label>
+          <input type="text" id="newUserName" placeholder="e.g. Maya Lin" required>
+          <label for="newUserBio">Short Bio</label>
+          <input type="text" id="newUserBio" placeholder="e.g. MERN stack developer">
+          <button type="submit" class="btn btn-primary btn-block">+ Create Profile</button>
+          <p id="userMsg" class="status-msg"></p>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Center: Feed & Post Composer -->
+    <section class="feed-column">
+      <!-- Composer -->
+      <div class="card composer-card">
+        <h3>Share an update</h3>
+        <form id="createPostForm" onsubmit="handleCreatePost(event)">
+          <textarea id="postText" placeholder="What's happening in your coding journey?" rows="3" required></textarea>
+          <div class="composer-actions">
+            <span class="posting-as">Posting as: <strong id="postingAsLabel">...</strong></span>
+            <button type="submit" class="btn btn-primary">Publish Post</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Feed List -->
+      <div class="feed-header">
+        <h2>Community Feed</h2>
+        <button class="btn btn-secondary btn-sm" onclick="loadData()">↻ Refresh Feed</button>
+      </div>
+
+      <div id="feed" class="posts-feed">
+        <p class="loading-state">Loading posts...</p>
+      </div>
+    </section>
+
+    <!-- Right Sidebar: Follow Members -->
+    <aside class="sidebar-right">
+      <div class="card community-card">
+        <div class="section-title-row">
+          <h3>Community Members</h3>
+          <button class="btn-link" onclick="seedSampleData()">Reset Data</button>
+        </div>
+        <p class="subtitle">Follow other developers</p>
+        <div id="membersList" class="members-list">
+          <p class="loading-state">Loading members...</p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>CodeAlpha Full Stack Development Internship &bull; Task 2: Mini Social Media Platform</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
