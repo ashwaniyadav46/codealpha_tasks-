@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CodeAlpha Full Stack Development Internship
 
 This repository contains the completed full-stack web applications for the **CodeAlpha Full Stack Development Internship**:
@@ -128,3 +129,6 @@ CodeAlpha_fsd/
         ├── style.css            # Modern 3-column feed styling
         └── app.js               # Client logic (likes, follows, comments, posts)
 ```
+=======
+# codealpha_tasks-
+>>>>>>> d5ce2760119d12d30fb8988e569a2040b52ffafa
